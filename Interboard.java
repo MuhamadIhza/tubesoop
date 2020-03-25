@@ -11,6 +11,7 @@ public class Interboard {
 
     public static char[][] matrix = new char[VERTICAL_MAT][HORIZONTAL_MAT];
     public Zombie[][] matrixZ = new Zombie[VERTICAL_MAT][HORIZONTAL_MAT];
+    public Plant[][] matrixP = new Plant[VERTICAL_MAT][HORIZONTAL_MAT];
 
     Random rand = new Random(); 
 
@@ -91,6 +92,18 @@ public class Interboard {
         }
     }
 
+    public void buyPlant(){
+        System.out.println("Choose your plant: ");
+        for(int i=0; i <= VERTICAL_MAT-1; i++){
+            for(int j=0; j <= 8; j++){
+                 char cek = matrix[i][j];
+                    if (Character.compare(cek,'P') == 0){
+                        System.out.println("Bisa diisi");
+                    }
+                }
+            }
+    }
+
     //7
     public void zombieToMatrix(Zombie z){
         matrix[z.getIndexY()-1][z.getIndexX()-1] = z.present;
@@ -99,6 +112,19 @@ public class Interboard {
     //8
     public void zombieToMatrixZ(Zombie z){
         matrixZ[z.getIndexY()-1][z.getIndexX()-1] = z;
+    }
+
+    public void plantToMatrix(Plant p){
+        matrix[p.getY()-1][p.getX()-1] = p.present;
+    }
+
+    public void plantToMatrixP(Plant p){
+        matrixP[p.getY()-1][p.getX()-1] = p;
+    }
+
+    public void plantToMats(Plant p){
+        plantToMatrixP(p);
+        plantToMatrix(p);
     }
 
     //9
@@ -127,11 +153,37 @@ public class Interboard {
 
         System.out.println("Masukkan command: ");
         String command = input.next();
-
+        Plant p;
+        while (command.equals("buy")){
+            int x,y;
+            boolean check;
+            check = false;
+            ex.printMatrix();
+            System.out.println("Choose your plant: ");
+            System.out.println("Enter position of the plant: ");
+            x = input.nextInt();
+            y = input.nextInt();
+            p = new Plant(x,y);
+            for(int i=0; i <= VERTICAL_MAT-1; i++){
+                for(int j=0; j <= 8; j++){
+                    char cek = matrix[i][j];
+                        if (matrix[i][j] == '\u0000' && i==x && j==y){
+                            ex.plantToMats(p);
+                            //System.out.print ("posisi (" + (i+1) +","+ (j+1) +")");
+                            System.out.println("Successful");
+                            check = true;
+                        } 
+                }
+            }
+            if (!check) System.out.println("You can't put plant here");
+            ex.printMatrix();
+            System.out.println("Masukkan command: ");
+            command = input.next();
+        }
         while (command.equals("skip")){
             Zombie z = new Zombie();
             ex.callZombie(z);
-            ex.printMatrix();
+            //ex.printMatrix();
             //ex.clearScreen();
             //ex.moveZombie(z);
             //ex.printMatrix();

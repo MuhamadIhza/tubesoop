@@ -1,3 +1,4 @@
-public class Pea {
-    
+public class Pea extends Plant{
+
+
 }

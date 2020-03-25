@@ -1,16 +1,20 @@
-public abstract class Plant {
+public class Plant {
     public final static char present = 'P';
     public final static int damage = 1;
     private int life = 100;
     private int indexY;
     private int indexX;
 
-    //public Plant() {}
+    public Plant(int x, int y) {
+        this.indexX = x;
+        this.indexY = y;
+    }
 
     public void setLoc(int x, int y){
         this.indexX = x;
         this.indexY = y;
     }
+
 
     public void attack(){
         
@@ -31,7 +35,7 @@ public abstract class Plant {
         this.indexX = x;
     }
 
-    public int getY(int y){
+    public int getY(){
         return indexY;
     }
 
@@ -39,10 +43,6 @@ public abstract class Plant {
         this.indexY = y;
     }
 
-    public void setLocPlant(int x,int y){
-        this.setX(x);
-        this.setY(y);
-    }
 
     //public void constantExcude();
 
