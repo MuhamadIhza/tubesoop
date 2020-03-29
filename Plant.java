@@ -1,13 +1,11 @@
-public class Plant {
-    public final static char present = 'P';
-    public final static int damage = 1;
-    private int life = 100;
+public abstract class Plant {
+    //public final static char present = 'P';
+    //public final static int damage = 1;
+    //private int life = 100;
     private int indexY;
     private int indexX;
 
-    public Plant(int x, int y) {
-        this.indexX = x;
-        this.indexY = y;
+    public Plant() {
     }
 
     public void setLoc(int x, int y){
@@ -20,26 +18,26 @@ public class Plant {
         
     }
 
-    public void setlife(int life){
+    /**public void setlife(int life){
         this.life = life;
     }
     public int getlife(){
         return this.life;
-    }
+    } **/
 
-    public int getX(){
+    public int getIndexX(){
         return indexX;
     }
 
-    public void setX(int x){
+    public void setIndexX(int x){
         this.indexX = x;
     }
 
-    public int getY(){
+    public int getIndexY(){
         return indexY;
     }
 
-    public void setY(int y){
+    public void setIndexY(int y){
         this.indexY = y;
     }
 
@@ -47,6 +45,6 @@ public class Plant {
     //public void constantExcude();
 
     public void receiveAttack(Zombie z){
-        this.life -= z.damage;
+        //this.life -= z.damage;
     }
 }

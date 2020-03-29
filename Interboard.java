@@ -114,15 +114,28 @@ public class Interboard {
         matrixZ[z.getIndexY()-1][z.getIndexX()-1] = z;
     }
 
-    public void plantToMatrix(Plant p){
-        matrix[p.getY()-1][p.getX()-1] = p.present;
+    public void plantToMatrix(Plant1 p){
+        matrix[p.getIndexY()-1][p.getIndexX()-1] = p.present;
     }
 
-    public void plantToMatrixP(Plant p){
-        matrixP[p.getY()-1][p.getX()-1] = p;
+    public void plantToMatrixP(Plant1 p){
+        matrixP[p.getIndexY()-1][p.getIndexX()-1] = p;
     }
 
-    public void plantToMats(Plant p){
+    public void plantToMats(Plant1 p){
+        plantToMatrixP(p);
+        plantToMatrix(p);
+    }
+
+    public void plantToMatrix(Plant2 p){
+        matrix[p.getIndexY()-1][p.getIndexX()-1] = p.present;
+    }
+
+    public void plantToMatrixP(Plant2 p){
+        matrixP[p.getIndexY()-1][p.getIndexX()-1] = p;
+    }
+
+    public void plantToMats(Plant2 p){
         plantToMatrixP(p);
         plantToMatrix(p);
     }
@@ -153,19 +166,33 @@ public class Interboard {
 
         System.out.println("Masukkan command: ");
         String command = input.next();
-        Plant p;
+        Plant1 p;
+        Plant2 p2;
         while (command.equals("buy")){
             int x,y;
             boolean check;
             check = false;
             ex.printMatrix();
             System.out.println("Choose your plant: ");
+            int jenis = input.nextInt();
             System.out.println("Enter position of the plant: ");
             x = input.nextInt();
             y = input.nextInt();
-            p = new Plant(x,y);
-            for(int i=0; i <= VERTICAL_MAT-1; i++){
-                for(int j=0; j <= 8; j++){
+            if (jenis == 1) {
+                p = new Plant1();
+                p.setLoc(x, y);
+                ex.plantToMats(p);
+                //ex.peluruToMats(p.peluru);
+                ex.printMatrix();
+            } else {
+                p2 = new Plant2();
+                p2.setLoc(x, y);
+                ex.plantToMats(p2);
+                //ex.peluruToMats(p2.peluru);
+                ex.printMatrix();
+            }
+            /*for(int i=1; i <= VERTICAL_MAT-1; i++){
+                for(int j=1; j <= 7; j++){
                     char cek = matrix[i][j];
                         if (matrix[i][j] == '\u0000' && i==x && j==y){
                             ex.plantToMats(p);
@@ -176,7 +203,7 @@ public class Interboard {
                 }
             }
             if (!check) System.out.println("You can't put plant here");
-            ex.printMatrix();
+            ex.printMatrix(); */
             System.out.println("Masukkan command: ");
             command = input.next();
         }

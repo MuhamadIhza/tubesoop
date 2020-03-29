@@ -38,7 +38,7 @@ public class Zombie {
     }
 
     public void receiveAttack(Plant p) {
-        this.life -= p.damage;
+        //this.life -= p.damage;
     }
 
     // public void attack();
