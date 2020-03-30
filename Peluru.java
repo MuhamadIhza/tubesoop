@@ -7,8 +7,8 @@ public class Peluru {
 
     public Peluru(int damage) {
         this.damage = damage;
-        
     }
+
 
     public int getIndexX() {
         return indexX;

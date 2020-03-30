@@ -12,7 +12,7 @@ public class Interboard {
     public static char[][] matrix = new char[VERTICAL_MAT][HORIZONTAL_MAT];
     public Zombie[][] matrixZ = new Zombie[VERTICAL_MAT][HORIZONTAL_MAT];
     public Plant[][] matrixP = new Plant[VERTICAL_MAT][HORIZONTAL_MAT];
-
+    public Peluru[][] matrixPel = new Peluru[VERTICAL_MAT][HORIZONTAL_MAT];
     Random rand = new Random(); 
 
     //1
@@ -139,6 +139,46 @@ public class Interboard {
         plantToMatrixP(p);
         plantToMatrix(p);
     }
+    
+    public void peluruToMatrix(Peluru pel){
+        matrix[pel.getIndexY()-1][pel.getIndexX()-1] = pel.present;
+     }
+ 
+     //6
+     public void peluruToMatrixPel(Peluru pel){
+         matrixPel[pel.getIndexY()-1][pel.getIndexX()-1] = pel;
+     }
+ 
+     //7
+     public void peluruToMats(Peluru pel){
+         peluruToMatrixPel(pel);
+         peluruToMatrix(pel);
+     }
+
+
+     public void moveAllPel(){ //connect moveZombie
+        for(int i=0; i <= VERTICAL_MAT-1; i++){
+            for(int j=0; j <= HORIZONTAL_MAT-1; j++){                   
+                char test = matrix[i][j];
+                if ((Character.compare(test, Peluru.present) == 0)){
+                    movePeluru(this.matrixPel[i][j]);
+                }               
+            }
+        }
+    }
+
+    //9
+    public void vanishPelAfterMove(Peluru pel){
+        matrix[pel.getIndexY()-1][pel.getIndexX()-1+1] = ' ';
+        matrixPel[pel.getIndexY()-1][pel.getIndexX()-1+1] = null;
+    }
+
+    //10
+    public void movePeluru(Peluru pel){
+        pel.moveToRight();
+        vanishPelAfterMove(pel);
+        peluruToMats(pel);
+    }
 
     //9
     public void zombieToMats(Zombie z){
@@ -151,6 +191,8 @@ public class Interboard {
         matrix[z.getIndexY()-1][z.getIndexX()-1+1] = ' ';
         matrixZ[z.getIndexY()-1][z.getIndexX()-1+1] = null;
     }
+
+
 
     public static void main(String[] args){
         Interboard ex = new Interboard();
@@ -181,14 +223,17 @@ public class Interboard {
             if (jenis == 1) {
                 p = new Plant1();
                 p.setLoc(x, y);
+                p.setPeluruIndex();
                 ex.plantToMats(p);
-                //ex.peluruToMats(p.peluru);
+                ex.peluruToMats(p.peluru);
                 ex.printMatrix();
+                //ex.movePeluru(p.peluru);
             } else {
                 p2 = new Plant2();
                 p2.setLoc(x, y);
+                p2.setPeluruIndex();
                 ex.plantToMats(p2);
-                //ex.peluruToMats(p2.peluru);
+                ex.peluruToMats(p2.peluru);
                 ex.printMatrix();
             }
             /*for(int i=1; i <= VERTICAL_MAT-1; i++){
@@ -206,10 +251,12 @@ public class Interboard {
             ex.printMatrix(); */
             System.out.println("Masukkan command: ");
             command = input.next();
+    
         }
         while (command.equals("skip")){
             Zombie z = new Zombie();
             ex.callZombie(z);
+            //ex.moveAllPel();
             //ex.printMatrix();
             //ex.clearScreen();
             //ex.moveZombie(z);

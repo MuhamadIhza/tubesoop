@@ -12,5 +12,10 @@ public class Plant2 extends Plant{
         this.peluru.setIndexX(this.getIndexX() + 1);
     }
 
+    public void setPeluruIndex(){
+        this.peluru.setIndexY(this.getIndexY());
+        this.peluru.setIndexX(this.getIndexX() + 1);
+    }
+
 
 }

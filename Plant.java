@@ -4,6 +4,7 @@ public abstract class Plant {
     //private int life = 100;
     private int indexY;
     private int indexX;
+    public Peluru peluru;
 
     public Plant() {
     }
@@ -17,6 +18,7 @@ public abstract class Plant {
     public void attack(){
         
     }
+
 
     /**public void setlife(int life){
         this.life = life;
