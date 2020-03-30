@@ -3,22 +3,19 @@ import java.util.Random;
 public class Zombie {
 
     Random rand = new Random();
-
-    public final static int HORIZONTAL_MAT = 25;
-    public final static int VERTICAL_MAT = 7;
-
-    public final static int damage = 10;
+    public int damage;
     private int life;
-    public final static char present = 'Z';
-    public static int speed = 1; // in case it decreases when it receives an attack
+    public char present;
+    public  int speed; // in case it decreases when it receives an attack
     private int indexY;
     private int indexX;
     private int hitAmount; // show how much the zombie has hit in order to determine the decrease of its
                            // speed
 
     public Zombie() {
-        this.setIndexX(HORIZONTAL_MAT);
+        this.setIndexX(Definer.HORIZONTAL_MAT);
         randomizeStartLoc();
+        
     }
 
     public int getIndexX() {
@@ -50,7 +47,7 @@ public class Zombie {
     // public void randomizeTime();
 
     public void randomizeStartLoc() {
-        int y = rand.nextInt(VERTICAL_MAT);
+        int y = rand.nextInt(Definer.VERTICAL_MAT);
         if (y==0){
             y += 1;
         }
