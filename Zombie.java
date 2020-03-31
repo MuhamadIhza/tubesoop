@@ -65,7 +65,9 @@ public class Zombie {
         if (this.speed > 1){
             this.speed -= 1;
         }
-        
+        else if (this.speed <= 0){
+            this.speed = 1;
+        }
     }
 
   //  public void die();
