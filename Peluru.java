@@ -2,7 +2,7 @@ public class Peluru {
     public static char present = '-';
     private int indexX;
     private int indexY;
-    private int damage;
+    public int damage;
     public int speed = 1;
 
     public Peluru(int damage) {

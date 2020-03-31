@@ -297,11 +297,15 @@ public class Interboard {
         for (int i=0; i <= Definer.VERTICAL_MAT-1; i++){
             for (int j=0; j <= Definer.HORIZONTAL_MAT-1; j++){
                 if ((Character.compare(matrix[i][j],'z') == 0) || (Character.compare(matrix[i][j],'Z') == 0)){
-                    if ((Character.compare(matrix[i][j-2],'-') == 0) && (j>=2)){
+                    if ((Character.compare(matrix[i][j-2],'-') == 0) && (j>2)){
                         matrixZ[i][j].receiveAttack(matrixPel[i][j-2]);
+                        matrix[i][j-2] = ' ';
+                        matrixPel[i][j-2] = null;
                     }
-                    else if ((Character.compare(matrix[i][j-1],'-') == 0) && (j>=1)){
+                    else if ((Character.compare(matrix[i][j-1],'-') == 0) && (j>1)){
                         matrixZ[i][j].receiveAttack(matrixPel[i][j-1]);
+                        matrix[i][j-1] = ' ';
+                        matrixPel[i][j-1] = null;
                     }
                 }
             }

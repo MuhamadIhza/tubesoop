@@ -4,7 +4,7 @@ public class Zombie {
 
     Random rand = new Random();
     public int damage;
-    private int life;
+    public int life;
     public char present;
     public  int speed; // in case it decreases when it receives an attack
     private int indexY;
@@ -34,8 +34,8 @@ public class Zombie {
         this.indexY = indexY;
     }
 
-    public void receiveAttack(Plant p) {
-        //this.life -= p.damage;
+    public void receiveAttack(Peluru pel) {
+        this.life -= pel.damage;
     }
 
     // public void attack();
