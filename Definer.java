@@ -5,4 +5,10 @@ public class Definer{
     public final static int O_VERTICAL_MAT = VERTICAL_MAT+2;
     //public final static int ZOMBIE_
 
+
+    public static void helloScreen(){
+        System.out.println("======================================================================");
+        System.out.println("       SELAMAT DATANG DI PERMAINAN PLANT VS ZOMBIE KELOMPOK SATU      ");
+        System.out.println("======================================================================");
+    }
 }

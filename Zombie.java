@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class Zombie {
+public class Zombie implements GoodsInPvZ {
 
     Random rand = new Random();
     public int damage;
@@ -65,9 +65,7 @@ public class Zombie {
         if (this.speed > 1){
             this.speed -= 1;
         }
-        else if (this.speed <= 0){
-            this.speed = 1;
-        }
+        
     }
 
   //  public void die();

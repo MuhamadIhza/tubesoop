@@ -15,51 +15,6 @@ public class Interboard {
     public Peluru[][] matrixPel = new Peluru[VERTICAL_MAT][HORIZONTAL_MAT];
     Random rand = new Random(); 
 
-    //1
-    public void initialBoard(){
-        final int level=1; //1..O_VERTICAL_MAT
-
-        for (int i=0; i <= O_HORIZONTAL_MAT-1; i++){
-            System.out.print("*");
-        }
-        System.out.println("");
-        
-        for (int j=0; j <= VERTICAL_MAT-1; j++){
-            System.out.print("*");
-            for (int k=0; k <= HORIZONTAL_MAT-1; k++){
-                System.out.print(" "); //INDEX
-            }
-            System.out.println("*");
-        }
-
-        for (int i=0; i <= O_HORIZONTAL_MAT-1; i++){
-            System.out.print("*");
-        }
-        System.out.println("");
-
-    }
-
-    //2
-    public void clearScreen(){
-        try{
-            new ProcessBuilder("cmd","/c","cls").inheritIO().start().waitFor();
-        }
-        catch(final Exception e){
-            System.out.println(e);
-        }
-    }
-
-    //3
-    public void moveZombie(final Zombie z){
-        z.moveToLeft();
-        vanishAfterMove(z);
-        zombieToMats(z);
-    }
-
-    //4
-    //public void skip(); //connect moveZombie
-
-    //5
     public void printMatrix(){
         final int level=1; //1..O_VERTICAL_MAT
 
@@ -83,7 +38,12 @@ public class Interboard {
 
     }
 
-    //6
+    public void moveZombie(final Zombie z){
+        z.moveToLeft();
+        vanishAfterMove(z);
+        zombieToMats(z);
+    }
+
     public void callZombie(){
         final int d = rand.nextInt(4);
         final int zom = rand.nextInt(2);
@@ -103,13 +63,12 @@ public class Interboard {
         for(int i=0; i <= Definer.VERTICAL_MAT-1; i++){
             for(int j=0; j <= Definer.HORIZONTAL_MAT-1; j++){                   
                 char test = matrix[i][j];
-                //char check = matrix[i][j-1];
                 if ((Character.compare(test, 'z') == 0) || (Character.compare(test, 'Z') == 0)){
                     if (matrixZ[i][j].life <= 0){ //nyawa abis
                         matrixZ[i][j] = null;
                         matrix[i][j] = ' ';
                     }
-                    else if(!(Character.compare(matrix[i][j-1],'P')==0) && !(Character.compare(matrix[i][j-1],'p')==0)){ //normal
+                    else{ //normal
                         moveZombie(this.matrixZ[i][j]);
                     }
                 }               
@@ -171,12 +130,11 @@ public class Interboard {
 
 
      public void moveAllPel(){ //connect moveZombie, mungkin disini bug  //kl touch zombie, null
-
         for(int i=Definer.VERTICAL_MAT-1; i >= 0; i--){
             for(int j=Definer.HORIZONTAL_MAT-1; j >= 0 ; j--){                   
                 final char test = matrix[i][j];
                 if ((Character.compare(test, Peluru.present) == 0)){
-                    if (matrixPel[i][j].getIndexX() + 2 >= Definer.HORIZONTAL_MAT){ //sampe ujung
+                    if (matrixPel[i][j].getIndexX() + 2 >= Definer.HORIZONTAL_MAT){ //sampai ujung
                         matrixPel[i][j] = null;
                         matrix[i][j] = ' ';
                     }
@@ -185,8 +143,6 @@ public class Interboard {
                             matrix[i][j] = ' ';
                             matrixZ[i][j] = null;
                         }
-                        
-                        
                         else { //fine2 aja
                             movePeluru(this.matrixPel[i][j]);
                         }
@@ -246,11 +202,18 @@ public class Interboard {
             final int y = input.nextInt();
             final Plant1 p = new Plant1();
             p.setLoc(x, y);
-            p.setPeluruIndex();
+            //p.setPeluruIndex();
             plantToMats(p);
-            peluruToMats(p.peluru);
+            int i = p.getIndexY();
+            int j = p.getIndexX();
+
+            matrix[i-1][j] = '-';
+            Peluru pel = new Peluru(Plant1.damage);
+            pel.setIndexX(j+1);
+            pel.setIndexY(i);
+            peluruToMats(pel);
             printMatrix();
-                    //ex.movePeluru(p.peluru);
+            //ex.movePeluru(p.peluru);
         } 
         else if (jenis == 2) {
             System.out.println("Enter position of the plant: ");
@@ -258,9 +221,17 @@ public class Interboard {
             final int y = input.nextInt();
             final Plant2 p2 = new Plant2();
             p2.setLoc(x, y);
-            p2.setPeluruIndex();
+            //p2.setPeluruIndex();
             plantToMats(p2);
-            peluruToMats(p2.peluru);
+
+            int i = p2.getIndexY();
+            int j = p2.getIndexX();
+
+            matrix[i-1][j] = '-';
+            Peluru pel = new Peluru(Plant1.damage);
+            pel.setIndexX(j+1);
+            pel.setIndexY(i);
+            peluruToMats(pel);
             printMatrix();
         }
     }
@@ -322,10 +293,58 @@ public class Interboard {
         }
     }
 
-    public void plantsReceiveAttack(){
+    //18
+    public void plantPeluruMove(Plant p){
+
+        for (Peluru pel : p.peluru){
+            pel.moveToRight();
+        }
+    }
+
+    //19
+   // public void tiapSkipNewPel(Plant p,int skipAmount){
+     //   if (skipAmount == 4){
+       //     p.generatePeluru();
+        //}
+    //}
+
+    //20
+    public void plantsAllNewPel(){
         for (int i=0; i <= Definer.VERTICAL_MAT-1; i++){
             for (int j=0; j <= Definer.HORIZONTAL_MAT-1; j++){
-                if (((Character.compare(matrix[i][j],'z') == 0) || (Character.compare(matrix[i][j],'Z') == 0)) && (j>2)){
+                if (((Character.compare(matrix[i][j],'p') == 0) || (Character.compare(matrix[i][j],'P') == 0))){
+                    newPeluruForPlant(matrixP[i][j]);
+                }
+            }
+        }
+    }
+
+    public void newPeluruForPlant(Plant p){
+
+        int i = p.getIndexY();
+        int j = p.getIndexX();
+
+        matrix[i-1][j] = '-';
+        Peluru pel = new Peluru(Plant1.damage);
+        pel.setIndexX(j+1);
+        pel.setIndexY(i);
+        peluruToMats(pel);
+        printMatrix();
+    }
+
+    //21
+    //public void addPelToPlants(Plant p){
+      //  int i = p.getIndexY();
+       // int j = p.getIndexY();
+
+        //matrix[i][j+1] = '-';
+        //Peluru pel = new Peluru()
+    //}
+
+    public void plantsReceiveAttack(){
+        for (int i=Definer.VERTICAL_MAT-1; i >= 0 ; i--){
+            for (int j=Definer.HORIZONTAL_MAT-1; j >= 0 ; j--){
+                if (((Character.compare(matrix[i][j],'z') == 0) || (Character.compare(matrix[i][j],'Z') == 0))){
                     /*if ((Character.compare(matrix[i][j-2],'P') == 0) || (Character.compare(matrix[i][j-2],'p') == 0)){
                         matrixP[i][j-2].receiveAttack(matrixZ[i][j]);
                         if (matrixP[i][j-2].getLife() <= 0){
@@ -335,7 +354,7 @@ public class Interboard {
                     }else */
                     if ((Character.compare(matrix[i][j-1],'P') == 0) || (Character.compare(matrix[i][j-1],'p') == 0)){
                         matrixP[i][j-1].receiveAttack(matrixZ[i][j]);
-                        if (matrixP[i][j-1].getLife() <= 0){
+                        if (matrixP[i][j-1].getlife() <= 0){
                             matrix[i][j-1] = ' ';
                             matrixP[i][j-1] = null;
                         }
@@ -343,6 +362,102 @@ public class Interboard {
                 }
                 
             }
+        }
+    }
+
+    public static void main(final String[] args){
+
+        int skipcounter = 0;
+
+        final Interboard ex = new Interboard();
+        //ex.initialBoard();
+
+        //ex.clearScreen();
+
+      //  ex.callZombie();
+        //ex.printMatrix();
+
+
+        final Scanner input = new Scanner(System.in);
+
+        System.out.println("Masukkan command: ");
+        String command = input.next();
+        
+        while ((!command.equals("buy")) && (!command.equals("skip")) && (!command.equals("end"))){
+            System.out.println("Command Anda salah, pastikan command 'buy' atau 'skip' atau 'end'!");
+            System.out.println("Masukkan command: ");
+            command = input.next();
+        }
+
+        boolean kalah = false;
+
+        while ((command.equals("buy") || command.equals("skip") || command.equals("end")) && (kalah == false)){
+            if (command.equals("buy")){
+                final int x,y;
+                boolean check;
+                check = false;
+                ex.printMatrix();
+                
+                ex.buyPlant();
+                System.out.println("Masukkan command: ");
+                command = input.next();
+                while (!command.equals("buy") && !command.equals("skip") && !command.equals("end")){
+                    System.out.println("Command Anda salah, pastikan command 'buy' atau 'skip' atau 'end'!");
+                    System.out.println("Masukkan command: ");
+                    command = input.next();
+                }
+        
+            }
+            else if (command.equals("skip")){
+                skipcounter += 1;
+                              
+                
+                for (int i=0; i <= Definer.VERTICAL_MAT-1; i++){ //test cek peluru damagenya brp
+                    for (int j=0; j <= Definer.HORIZONTAL_MAT-1; j++){
+                        if (Character.compare(ex.matrix[i][j],'-') == 0){
+                            System.out.println(i+ " " + j+ " " + ex.matrixPel[i][j].damage);
+                        }
+                        else if ((Character.compare(ex.matrix[i][j],'z') == 0) || (Character.compare(ex.matrix[i][j],'Z') == 0)){
+                            System.out.println(i+ " " + j+ " " + ex.matrixZ[i][j].life);
+                        }
+                    }
+                }
+
+                if ((skipcounter%4) == 0){
+                    ex.plantsAllNewPel();
+                }
+
+                if (ex.zombieReachEnd() == true){
+                    kalah = true;
+                }
+                else if (ex.zombieReachEnd() == false){
+                    ex.moveAllZombie();
+                    ex.callZombie();
+                    ex.printMatrix();
+                    ex.zombiesReceiveAttack();
+                    ex.plantsReceiveAttack();
+                    ex.moveAllPel();
+                    ex.zombiesReceiveAttack();
+                    ex.plantsReceiveAttack();
+                    ex.printMatrix();
+                    System.out.println("Masukkan command: ");
+                    command = input.next();
+                    //ex.moveAllPel();
+                    while (!command.equals("buy") && !command.equals("skip") && !command.equals("end")){
+                        System.out.println("Command Anda salah, pastikan command 'buy' atau 'skip' atau 'end'!");
+                        System.out.println("Masukkan command: ");
+                        command = input.next();
+                    }
+                }
+
+                
+                
+            }
+            
+        }
+
+        if (kalah == true){
+            System.out.println("Anda kalah, otak Anda dimakan Zombie. Permainan usai.");
         }
     }
 }

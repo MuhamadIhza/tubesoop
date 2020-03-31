@@ -1,10 +1,12 @@
-public abstract class Plant {
+import java.util.ArrayList;
+
+public abstract class Plant implements GoodsInPvZ {
     //public final static char present = 'P';
     //public final static int damage = 1;
-    public int life;
+    private int life = 100;
     private int indexY;
     private int indexX;
-    public Peluru peluru;
+    public ArrayList<Peluru> peluru = new ArrayList<Peluru>();
 
     public Plant() {
     }
@@ -18,12 +20,13 @@ public abstract class Plant {
     public void attack(){
         
     }
+    
 
 
-    public void setLife(int life){
+    public void setlife(int life){
         this.life = life;
     }
-    public int getLife(){
+    public int getlife(){
         return this.life;
     } 
 
@@ -47,6 +50,8 @@ public abstract class Plant {
     //public void constantExcude();
 
     public void receiveAttack(Zombie z){
-        this.life -= z.damage;
+        //this.life -= z.damage;
     }
+
+    //public abstract void generatePeluru();
 }
