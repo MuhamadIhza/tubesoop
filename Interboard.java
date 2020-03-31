@@ -175,7 +175,7 @@ public class Interboard {
             for(int j=Definer.HORIZONTAL_MAT-1; j >= 0 ; j--){                   
                 final char test = matrix[i][j];
                 if ((Character.compare(test, Peluru.present) == 0)){
-                    if (matrixPel[i][j].getIndexX() + 1 > Definer.HORIZONTAL_MAT){ //sampe ujung
+                    if (matrixPel[i][j].getIndexX() + 2 >= Definer.HORIZONTAL_MAT){ //sampe ujung
                         matrixPel[i][j] = null;
                         matrix[i][j] = ' ';
                     }
@@ -304,18 +304,19 @@ public class Interboard {
     public void zombiesReceiveAttack(){
         for (int i=0; i <= Definer.VERTICAL_MAT-1; i++){
             for (int j=0; j <= Definer.HORIZONTAL_MAT-1; j++){
-                if ((Character.compare(matrix[i][j],'z') == 0) || (Character.compare(matrix[i][j],'Z') == 0)){
-                    if ((Character.compare(matrix[i][j-2],'-') == 0) && (j>2)){
+                if (((Character.compare(matrix[i][j],'z') == 0) || (Character.compare(matrix[i][j],'Z') == 0)) && (j>2)){
+                    if ((Character.compare(matrix[i][j-2],'-') == 0)){
                         matrixZ[i][j].receiveAttack(matrixPel[i][j-2]);
                         matrix[i][j-2] = ' ';
                         matrixPel[i][j-2] = null;
                     }
-                    else if ((Character.compare(matrix[i][j-1],'-') == 0) && (j>1)){
+                    else if ((Character.compare(matrix[i][j-1],'-') == 0)){
                         matrixZ[i][j].receiveAttack(matrixPel[i][j-1]);
                         matrix[i][j-1] = ' ';
                         matrixPel[i][j-1] = null;
                     }
                 }
+                
             }
         }
     }
@@ -380,9 +381,9 @@ public class Interboard {
                 }
                 else{
                     ex.moveAllZombie();
-
                     ex.callZombie();
-                    
+                    ex.printMatrix();
+                    ex.zombiesReceiveAttack();
                     ex.moveAllPel();
                     ex.zombiesReceiveAttack();
                     ex.printMatrix();
