@@ -175,16 +175,20 @@ public class Interboard {
             for(int j=Definer.HORIZONTAL_MAT-1; j >= 0 ; j--){                   
                 final char test = matrix[i][j];
                 if ((Character.compare(test, Peluru.present) == 0)){
-                    if ((Character.compare(matrix[i][j+2],'z') == 0) || (Character.compare(matrix[i][j+1],'z') == 0) || (Character.compare(matrix[i][j+2],'Z') == 0) || (Character.compare(matrix[i][j+1],'Z') == 0)) { //will touch zombie, null
+                    if (matrixPel[i][j].getIndexX() + 1 > Definer.HORIZONTAL_MAT){ //sampe ujung
+                        matrixPel[i][j] = null;
                         matrix[i][j] = ' ';
-                        matrixZ[i][j] = null;
                     }
-                    
-                    if (j < ) {
-
-                    }
-                    else { //fine2 aja
-                        movePeluru(this.matrixPel[i][j]);
+                    else{
+                        if ((Character.compare(matrix[i][j+2],'z') == 0) || (Character.compare(matrix[i][j+1],'z') == 0) || (Character.compare(matrix[i][j+2],'Z') == 0) || (Character.compare(matrix[i][j+1],'Z') == 0)) { //will touch zombie, null
+                            matrix[i][j] = ' ';
+                            matrixZ[i][j] = null;
+                        }
+                        
+                        
+                        else { //fine2 aja
+                            movePeluru(this.matrixPel[i][j]);
+                        }
                     }
                 }               
             }
@@ -358,15 +362,8 @@ public class Interboard {
         
             }
             else if (command.equals("skip")){
-                ex.moveAllZombie();
-
-                ex.callZombie();
+                              
                 
-                ex.moveAllPel();
-                ex.zombiesReceiveAttack();
-
-                
-                ex.printMatrix();
                 for (int i=0; i <= Definer.VERTICAL_MAT-1; i++){ //test cek peluru damagenya brp
                     for (int j=0; j <= Definer.HORIZONTAL_MAT-1; j++){
                         if (Character.compare(ex.matrix[i][j],'-') == 0){
@@ -382,6 +379,13 @@ public class Interboard {
                     kalah = true;
                 }
                 else{
+                    ex.moveAllZombie();
+
+                    ex.callZombie();
+                    
+                    ex.moveAllPel();
+                    ex.zombiesReceiveAttack();
+                    ex.printMatrix();
                     System.out.println("Masukkan command: ");
                     command = input.next();
                     //ex.moveAllPel();
