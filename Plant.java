@@ -1,7 +1,7 @@
 public abstract class Plant {
     //public final static char present = 'P';
     //public final static int damage = 1;
-    //private int life = 100;
+    public int life;
     private int indexY;
     private int indexX;
     public Peluru peluru;
@@ -20,12 +20,12 @@ public abstract class Plant {
     }
 
 
-    /**public void setlife(int life){
+    public void setLife(int life){
         this.life = life;
     }
-    public int getlife(){
+    public int getLife(){
         return this.life;
-    } **/
+    } 
 
     public int getIndexX(){
         return indexX;
@@ -47,6 +47,6 @@ public abstract class Plant {
     //public void constantExcude();
 
     public void receiveAttack(Zombie z){
-        //this.life -= z.damage;
+        this.life -= z.damage;
     }
 }

@@ -11,6 +11,7 @@ public class Plant1 extends Plant{
     public Plant1(){
         super();
         this.peluru.damage = Plant1.damage;
+        super.life = 50;
         this.peluru.setIndexY(this.getIndexY());
         this.peluru.setIndexX(this.getIndexX() + 1);
     }

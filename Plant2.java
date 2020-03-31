@@ -9,6 +9,7 @@ public class Plant2 extends Plant{
     
     public Plant2(){
         super();
+        super.life = 60;
         this.peluru.damage = Plant2.damage;
         this.peluru.setIndexY(this.getIndexY());
         this.peluru.setIndexX(this.getIndexX() + 1);

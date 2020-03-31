@@ -103,12 +103,13 @@ public class Interboard {
         for(int i=0; i <= Definer.VERTICAL_MAT-1; i++){
             for(int j=0; j <= Definer.HORIZONTAL_MAT-1; j++){                   
                 char test = matrix[i][j];
+                //char check = matrix[i][j-1];
                 if ((Character.compare(test, 'z') == 0) || (Character.compare(test, 'Z') == 0)){
                     if (matrixZ[i][j].life <= 0){ //nyawa abis
                         matrixZ[i][j] = null;
                         matrix[i][j] = ' ';
                     }
-                    else{ //normal
+                    else if(!(Character.compare(matrix[i][j-1],'P')==0) && !(Character.compare(matrix[i][j-1],'p')==0)){ //normal
                         moveZombie(this.matrixZ[i][j]);
                     }
                 }               
@@ -321,6 +322,30 @@ public class Interboard {
         }
     }
 
+    public void plantsReceiveAttack(){
+        for (int i=0; i <= Definer.VERTICAL_MAT-1; i++){
+            for (int j=0; j <= Definer.HORIZONTAL_MAT-1; j++){
+                if (((Character.compare(matrix[i][j],'z') == 0) || (Character.compare(matrix[i][j],'Z') == 0)) && (j>2)){
+                    /*if ((Character.compare(matrix[i][j-2],'P') == 0) || (Character.compare(matrix[i][j-2],'p') == 0)){
+                        matrixP[i][j-2].receiveAttack(matrixZ[i][j]);
+                        if (matrixP[i][j-2].getLife() <= 0){
+                            matrix[i][j-2] = ' ';
+                            matrixP[i][j-2] = null;
+                        }
+                    }else */
+                    if ((Character.compare(matrix[i][j-1],'P') == 0) || (Character.compare(matrix[i][j-1],'p') == 0)){
+                        matrixP[i][j-1].receiveAttack(matrixZ[i][j]);
+                        if (matrixP[i][j-1].getLife() <= 0){
+                            matrix[i][j-1] = ' ';
+                            matrixP[i][j-1] = null;
+                        }
+                    }
+                }
+                
+            }
+        }
+    }
+
 
     public static void main(final String[] args){
         final Interboard ex = new Interboard();
@@ -386,6 +411,7 @@ public class Interboard {
                     ex.zombiesReceiveAttack();
                     ex.moveAllPel();
                     ex.zombiesReceiveAttack();
+                    ex.plantsReceiveAttack();
                     ex.printMatrix();
                     System.out.println("Masukkan command: ");
                     command = input.next();
