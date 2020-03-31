@@ -171,15 +171,19 @@ public class Interboard {
 
      public void moveAllPel(){ //connect moveZombie, mungkin disini bug  //kl touch zombie, null
 
-        for(int i=7-1; i >= 0; i--){
-            for(int j=25-1; j >= 0 ; j--){                   
+        for(int i=Definer.VERTICAL_MAT-1; i >= 0; i--){
+            for(int j=Definer.HORIZONTAL_MAT-1; j >= 0 ; j--){                   
                 final char test = matrix[i][j];
                 if ((Character.compare(test, Peluru.present) == 0)){
                     if ((Character.compare(matrix[i][j+2],'z') == 0) || (Character.compare(matrix[i][j+1],'z') == 0) || (Character.compare(matrix[i][j+2],'Z') == 0) || (Character.compare(matrix[i][j+1],'Z') == 0)) { //will touch zombie, null
                         matrix[i][j] = ' ';
                         matrixZ[i][j] = null;
                     }
-                    else{ //fine2 aja
+                    
+                    if (j < ) {
+
+                    }
+                    else { //fine2 aja
                         movePeluru(this.matrixPel[i][j]);
                     }
                 }               
