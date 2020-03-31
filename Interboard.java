@@ -359,6 +359,9 @@ public class Interboard {
 
         final Scanner input = new Scanner(System.in);
 
+        Player<String,Integer> highscore = new Player<String,Integer>();
+        int score = 0;
+
         System.out.println("Masukkan command: ");
         String command = input.next();
         
@@ -422,7 +425,7 @@ public class Interboard {
                         command = input.next();
                     }
                 }
-
+                score++;
                 
                 
             }
@@ -431,6 +434,10 @@ public class Interboard {
 
         if (kalah == true){
             System.out.println("Anda kalah, otak Anda dimakan Zombie. Permainan usai.");
+            System.out.println("Masukkan nama pemain: ");
+            String player = input.next();
+            highscore.add(player,score);
+            highscore.printInfo();
         }
     }
 }
