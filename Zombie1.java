@@ -2,7 +2,7 @@ public class Zombie1 extends Zombie{
 
     private static int life = 50;
     public static int speed = 1;
-    private final static int damage = 4;
+    private final static int damage = 10;
     //public final static char present = 'z';
     
     public Zombie1(){
@@ -10,6 +10,7 @@ public class Zombie1 extends Zombie{
         super.present = 'z';
         super.speed = Zombie1.speed;
         super.life = Zombie1.life;
+        super.damage = Zombie1.damage;
     }
 
 

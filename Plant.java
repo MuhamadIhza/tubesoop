@@ -50,7 +50,7 @@ public abstract class Plant implements GoodsInPvZ {
     //public void constantExcude();
 
     public void receiveAttack(Zombie z){
-        //this.life -= z.damage;
+        this.life -= z.damage;
     }
 
     //public abstract void generatePeluru();

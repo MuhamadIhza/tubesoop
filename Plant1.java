@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Plant1 extends Plant{
 
     private  static int life = 50;
-    public final static int damage = 100;
+    public final static int damage = 15;
     
     public final static char present = 'p';
     public static int price = 25;
@@ -13,7 +13,7 @@ public class Plant1 extends Plant{
     
     public Plant1(){
         super();
-        
+
         //peluru = new ArrayList<Peluru>();
         //generatePeluru();
         //this.peluru.get(0).setIndexY(super.getIndexY());

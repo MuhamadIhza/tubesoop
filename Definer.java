@@ -10,5 +10,9 @@ public class Definer{
         System.out.println("======================================================================");
         System.out.println("       SELAMAT DATANG DI PERMAINAN PLANT VS ZOMBIE KELOMPOK SATU      ");
         System.out.println("======================================================================");
+        System.out.println("Pilihan command yang dapat Anda pilih:");
+        System.out.println("1. skip     --> melanjutkan permainan");
+        System.out.println("1. buy      --> membeli tanaman");
+        System.out.println("3. end      --> mengakhiri permainan");
     }
 }

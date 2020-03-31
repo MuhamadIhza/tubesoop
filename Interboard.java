@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 public class Interboard {
 
+    public int nyawa = 100;
+
     public final static int HORIZONTAL_MAT = 25;
     public final static int VERTICAL_MAT = 7;
     public final static int O_HORIZONTAL_MAT = HORIZONTAL_MAT+2;
@@ -68,7 +70,10 @@ public class Interboard {
                         matrixZ[i][j] = null;
                         matrix[i][j] = ' ';
                     }
-                    else{ //normal
+                    /**else{ //normal
+                        moveZombie(this.matrixZ[i][j]);
+                    } **/
+                    else if(!(Character.compare(matrix[i][j-1],'P')==0) && !(Character.compare(matrix[i][j-1],'p')==0)){ //normal
                         moveZombie(this.matrixZ[i][j]);
                     }
                 }               
@@ -181,9 +186,10 @@ public class Interboard {
     //11
     public void buyPlant(){
         Scanner input = new Scanner(System.in);
+        System.out.println("Sunflower point Anda: " + this.nyawa);
         System.out.println("Available plant: ");
-        System.out.print("[1] Plant1 damage X price X");
-        System.out.println("    [2] Plant2 damage X price X");
+        System.out.print("[1] Plant1 damage 15 price 25");
+        System.out.println("    [2] Plant2 damage 20 price 30");
         System.out.println("Choose your plant: ");
                 
         int jenis = input.nextInt();
@@ -196,7 +202,8 @@ public class Interboard {
             }
         }
 
-        if (jenis == 1) {
+        if ((jenis == 1) && (nyawa >= Plant1.price)) {
+            this.nyawa -= Plant1.price;
             System.out.println("Enter position of the plant: ");
             final int x = input.nextInt();
             final int y = input.nextInt();
@@ -215,7 +222,8 @@ public class Interboard {
             printMatrix();
             //ex.movePeluru(p.peluru);
         } 
-        else if (jenis == 2) {
+        else if ((jenis == 2) && (nyawa >= Plant1.price)) {
+            this.nyawa -= Plant2.price;
             System.out.println("Enter position of the plant: ");
             final int x = input.nextInt();
             final int y = input.nextInt();
@@ -233,6 +241,9 @@ public class Interboard {
             pel.setIndexY(i);
             peluruToMats(pel);
             printMatrix();
+        }
+        else{
+            System.out.println("Sunflower point Anda tidak cukup!");
         }
     }
 
@@ -343,7 +354,7 @@ public class Interboard {
 
     public void plantsReceiveAttack(){
         for (int i=Definer.VERTICAL_MAT-1; i >= 0 ; i--){
-            for (int j=Definer.HORIZONTAL_MAT-1; j >= 0 ; j--){
+            for (int j=Definer.HORIZONTAL_MAT-1; j >= 1 ; j--){
                 if (((Character.compare(matrix[i][j],'z') == 0) || (Character.compare(matrix[i][j],'Z') == 0))){
                     /*if ((Character.compare(matrix[i][j-2],'P') == 0) || (Character.compare(matrix[i][j-2],'p') == 0)){
                         matrixP[i][j-2].receiveAttack(matrixZ[i][j]);
@@ -366,6 +377,8 @@ public class Interboard {
     }
 
     public static void main(final String[] args){
+
+        Definer.helloScreen();
 
         int skipcounter = 0;
 
@@ -427,6 +440,10 @@ public class Interboard {
                     ex.plantsAllNewPel();
                 }
 
+                if ((skipcounter%9) == 0){
+                    ex.nyawa += 50;
+                }
+
                 if (ex.zombieReachEnd() == true){
                     kalah = true;
                 }
@@ -458,6 +475,7 @@ public class Interboard {
 
         if (kalah == true){
             System.out.println("Anda kalah, otak Anda dimakan Zombie. Permainan usai.");
+            System.out.println("Skor akhir Anda: " + skipcounter*1000);
         }
     }
 }
