@@ -1,10 +1,7 @@
-import java.security.interfaces.DSAKeyPairGenerator;
 import java.util.Scanner;
 
 public class Main{
     public static void main(final String[] args){
-        final Scanner input = new Scanner(System.in);
-        Player<String,Integer> highscore = new Player<String,Integer>();
         System.out.println("|***********************|");
         System.out.println("|****WELCOME TO PVZ*****|");
         System.out.println("|What do you want to do?|");
@@ -12,6 +9,9 @@ public class Main{
         System.out.println("|Highscore              |");
         System.out.println("|Exit                   |");
         System.out.println("|***********************|");
+        final Scanner input = new Scanner(System.in);
+        int skipcounter = 0;
+        Player<String,Integer> highscore = new Player<String,Integer>();
         System.out.println("Masukkan command: ");
         String initCommand = input.next();
         boolean stop = false;
@@ -25,19 +25,19 @@ public class Main{
             //  ex.callZombie();
                 //ex.printMatrix();
     
-                int score = 0;
+                
     
                 System.out.println("Masukkan command permainan: ");
                 String command = input.next();
                 
                 while ((!command.equals("buy")) && (!command.equals("skip")) && (!command.equals("end"))){
                     System.out.println("Command Anda salah, pastikan command 'buy' atau 'skip' atau 'end'!");
-                    System.out.println("Masukkan command permainan: ");
+                    System.out.println("Masukkan command: ");
                     command = input.next();
                 }
-    
+        
                 boolean kalah = false;
-    
+        
                 while ((command.equals("buy") || command.equals("skip") || command.equals("end")) && (kalah == false)){
                     if (command.equals("buy")){
                         final int x,y;
@@ -46,17 +46,18 @@ public class Main{
                         ex.printMatrix();
                         
                         ex.buyPlant();
-                        System.out.println("Masukkan command permainan: ");
+                        System.out.println("Masukkan command: ");
                         command = input.next();
                         while (!command.equals("buy") && !command.equals("skip") && !command.equals("end")){
                             System.out.println("Command Anda salah, pastikan command 'buy' atau 'skip' atau 'end'!");
-                            System.out.println("Masukkan command permainan: ");
+                            System.out.println("Masukkan command: ");
                             command = input.next();
                         }
                 
                     }
                     else if (command.equals("skip")){
-                                    
+                        skipcounter += 1;
+                                      
                         
                         for (int i=0; i <= Definer.VERTICAL_MAT-1; i++){ //test cek peluru damagenya brp
                             for (int j=0; j <= Definer.HORIZONTAL_MAT-1; j++){
@@ -68,29 +69,40 @@ public class Main{
                                 }
                             }
                         }
-    
+        
+                        if ((skipcounter%4) == 0){
+                            ex.plantsAllNewPel();
+                        }
+        
+                        if ((skipcounter%9) == 0){
+                            ex.nyawa += 50;
+                        }
+        
                         if (ex.zombieReachEnd() == true){
                             kalah = true;
                         }
-                        else{
+                        else if (ex.zombieReachEnd() == false){
                             ex.moveAllZombie();
                             ex.callZombie();
                             ex.printMatrix();
                             ex.zombiesReceiveAttack();
+                            ex.plantsReceiveAttack();
                             ex.moveAllPel();
                             ex.zombiesReceiveAttack();
                             ex.plantsReceiveAttack();
                             ex.printMatrix();
-                            System.out.println("Masukkan command permainan: ");
+                            System.out.println("Masukkan command: ");
                             command = input.next();
                             //ex.moveAllPel();
                             while (!command.equals("buy") && !command.equals("skip") && !command.equals("end")){
                                 System.out.println("Command Anda salah, pastikan command 'buy' atau 'skip' atau 'end'!");
-                                System.out.println("Masukkan command permainan: ");
+                                System.out.println("Masukkan command: ");
                                 command = input.next();
                             }
                         }
-                        score++;
+                        else if (command.equals("end")){
+                            kalah = true;
+                        }
                         
                         
                     }
@@ -101,13 +113,14 @@ public class Main{
                     System.out.println("Anda kalah, otak Anda dimakan Zombie. Permainan usai.");
                     System.out.println("Masukkan nama pemain: ");
                     String player = input.next();
+                    int score = skipcounter*1000;
                     highscore.add(player,score);
                     highscore.printInfo();
                 }
                 System.out.println("|***********************|");
                 System.out.println("|****WELCOME TO PVZ*****|");
                 System.out.println("|What do you want to do?|");
-                System.out.println("|New Game               |");
+                System.out.println("|New_Game               |");
                 System.out.println("|Highscore              |");
                 System.out.println("|Exit                   |");
                 System.out.println("|***********************|");
@@ -119,7 +132,7 @@ public class Main{
                 System.out.println("|***********************|");
                 System.out.println("|****WELCOME TO PVZ*****|");
                 System.out.println("|What do you want to do?|");
-                System.out.println("|New Game               |");
+                System.out.println("|New_Game               |");
                 System.out.println("|Highscore              |");
                 System.out.println("|Exit                   |");
                 System.out.println("|***********************|");
