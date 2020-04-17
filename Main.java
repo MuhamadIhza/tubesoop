@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Main{
-    public static void main(final String[] args){
+    public static void main(final String[] args) throws Exception{
         System.out.println("|***********************|");
         System.out.println("|****WELCOME TO PVZ*****|");
         System.out.println("|What do you want to do?|");

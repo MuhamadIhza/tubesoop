@@ -184,66 +184,72 @@ public class Interboard {
     }
 
     //11
-    public void buyPlant(){
+    public void buyPlant() throws InvalidInputException{
         Scanner input = new Scanner(System.in);
-        System.out.println("Sunflower point Anda: " + this.nyawa);
-        System.out.println("Available plant: ");
-        System.out.print("[1] Plant1 damage 15 price 25");
-        System.out.println("    [2] Plant2 damage 20 price 30");
-        System.out.println("Choose your plant: ");
-                
-        int jenis = input.nextInt();
+        try{
+            System.out.println("Sunflower point Anda: " + this.nyawa);
+            System.out.println("Available plant: ");
+            System.out.print("[1] Plant1 damage 15 price 25");
+            System.out.println("    [2] Plant2 damage 20 price 30");
+            System.out.println("Choose your plant: ");
+                        
+            int jenis = input.nextInt();
 
-        if ((jenis != 1) && (jenis != 2)){
+            if ((jenis != 1) && (jenis != 2)){
+                throw new InvalidInputException(jenis);
+            }
             while ((jenis != 1) && (jenis != 2)){
                 System.out.println("Tanaman dengan nomor " + jenis + " tidak tersedia.");
                 System.out.println("Choose your plant: ");
                 jenis = input.nextInt();
             }
+            
+            if ((jenis == 1) && (nyawa >= Plant1.price)) {
+                this.nyawa -= Plant1.price;
+                System.out.println("Enter position of the plant: ");
+                final int x = input.nextInt();
+                final int y = input.nextInt();
+                final Plant1 p = new Plant1();
+                p.setLoc(x, y);
+                //p.setPeluruIndex();
+                plantToMats(p);
+                int i = p.getIndexY();
+                int j = p.getIndexX();
+
+                matrix[i-1][j] = '-';
+                Peluru pel = new Peluru(Plant1.damage);
+                pel.setIndexX(j+1);
+                pel.setIndexY(i);
+                peluruToMats(pel);
+                printMatrix();
+                //ex.movePeluru(p.peluru);
+            } 
+            else if ((jenis == 2) && (nyawa >= Plant1.price)) {
+                this.nyawa -= Plant2.price;
+                System.out.println("Enter position of the plant: ");
+                final int x = input.nextInt();
+                final int y = input.nextInt();
+                final Plant2 p2 = new Plant2();
+                p2.setLoc(x, y);
+                //p2.setPeluruIndex();
+                plantToMats(p2);
+
+                int i = p2.getIndexY();
+                int j = p2.getIndexX();
+
+                matrix[i-1][j] = '-';
+                Peluru pel = new Peluru(Plant1.damage);
+                pel.setIndexX(j+1);
+                pel.setIndexY(i);
+                peluruToMats(pel);
+                printMatrix();
+            }
+            else{
+                System.out.println("Sunflower point Anda tidak cukup!");
+            }
         }
-
-        if ((jenis == 1) && (nyawa >= Plant1.price)) {
-            this.nyawa -= Plant1.price;
-            System.out.println("Enter position of the plant: ");
-            final int x = input.nextInt();
-            final int y = input.nextInt();
-            final Plant1 p = new Plant1();
-            p.setLoc(x, y);
-            //p.setPeluruIndex();
-            plantToMats(p);
-            int i = p.getIndexY();
-            int j = p.getIndexX();
-
-            matrix[i-1][j] = '-';
-            Peluru pel = new Peluru(Plant1.damage);
-            pel.setIndexX(j+1);
-            pel.setIndexY(i);
-            peluruToMats(pel);
-            printMatrix();
-            //ex.movePeluru(p.peluru);
-        } 
-        else if ((jenis == 2) && (nyawa >= Plant1.price)) {
-            this.nyawa -= Plant2.price;
-            System.out.println("Enter position of the plant: ");
-            final int x = input.nextInt();
-            final int y = input.nextInt();
-            final Plant2 p2 = new Plant2();
-            p2.setLoc(x, y);
-            //p2.setPeluruIndex();
-            plantToMats(p2);
-
-            int i = p2.getIndexY();
-            int j = p2.getIndexX();
-
-            matrix[i-1][j] = '-';
-            Peluru pel = new Peluru(Plant1.damage);
-            pel.setIndexX(j+1);
-            pel.setIndexY(i);
-            peluruToMats(pel);
-            printMatrix();
-        }
-        else{
-            System.out.println("Sunflower point Anda tidak cukup!");
+        catch (InvalidInputException e){
+            System.out.println(e.getMessage());
         }
     }
 
