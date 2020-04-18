@@ -1,7 +1,7 @@
 public class InsufficientSunflowerPtsException extends Exception{
     private int input;
 
-    public InvalidInputException(int input){
+    public InsufficientSunflowerPtsException(int input){
         this.input = input;
     };
 
